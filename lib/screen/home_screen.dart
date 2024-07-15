@@ -29,6 +29,7 @@ class HomeScreen extends StatefulWidget {
       return Scaffold(
         body: SafeArea(
           child: TableCalendar(
+            locale: 'ko_KR',
             focusedDay: DateTime(2024, 7, 1),
             firstDay: DateTime(1800),
             lastDay: DateTime(3000),
