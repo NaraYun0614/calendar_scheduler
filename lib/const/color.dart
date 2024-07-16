@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const primaryColor = Color(0xFF0DB2B2);
 
-const categoryColors = {
+const categoryColors = [
   /// red
   'F44336',
   /// orange
@@ -17,4 +17,4 @@ const categoryColors = {
   '3F5185',
   /// purple
   '9C2780',
-};
+];

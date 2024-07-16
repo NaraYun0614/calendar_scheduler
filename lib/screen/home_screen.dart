@@ -4,10 +4,9 @@ import 'package:calendar_scheduler/component/schedule_bottom_sheet.dart';
 import 'package:calendar_scheduler/component/schedule_card.dart';
 import 'package:calendar_scheduler/component/today_banner.dart';
 import 'package:calendar_scheduler/const/color.dart';
+import 'package:calendar_scheduler/model/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../model/schedule.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,7 +22,32 @@ class HomeScreen extends StatefulWidget {
       DateTime.now().day,
     );
 
-    Map<DateTime, List<Schedule>> schedule = {};
+    /// {
+    ///   2024-11-23:[Schedule, Schedule],
+    ///   2024-11-24:[Schedule, Schedule]
+    ///  }
+    Map<DateTime, List<Schedule>> schedules = {
+      DateTime.utc(2024, 7, 8): [
+        Schedule(
+            id: 1,
+            startTime: 11,
+            endTime: 12,
+            content: 'Study Flutter',
+            date: DateTime.utc(2024, 7, 8),
+            color: categoryColors[0],
+            createdAt: DateTime.now().toUtc(),
+        ),
+        Schedule(
+            id: 2,
+            startTime: 14,
+            endTime: 16,
+            content: 'Study NestJS',
+            date: DateTime.utc(2024, 7, 8),
+            color: categoryColors[3],
+            createdAt: DateTime.now().toUtc(),
+        ),
+      ],
+    };
 
     @override
     Widget build(BuildContext context) {
@@ -60,24 +84,23 @@ class HomeScreen extends StatefulWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
                     child: ListView(
-                      children: [
-                        ScheduleCard(
-                            startTime: DateTime(
-                              2024,
-                              07,
-                              19,
-                              11,
-                            ),
-                            endTime: DateTime(
-                              2024,
-                              07,
-                              19,
-                              12,
-                            ),
-                            content: 'Study Flutter',
-                            color: Colors.blue,
-                        ),
-                      ],
+                      children: schedules.containsKey(selectedDay) ?
+                          schedules[selectedDay]!
+                          .map(
+                              (e) => ScheduleCard(
+                                  startTime: e.startTime,
+                                  endTime: e.endTime,
+                                  content: e.content,
+                                  color: Color(
+                                    int.parse(
+                                      'FF${e.color}',
+                                      radix: 16,
+                                    ),
+                                  ),
+                              ),
+                            )
+                            .toList()
+                        : [],
                     ),
                   ),
               ),
