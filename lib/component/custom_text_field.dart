@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final String label;
   final bool expand;
+  final FormFieldSetter<String> onSaved;
+  final FormFieldValidator<String> validator;
 
   const CustomTextField({
     required this.label,
+    required this.onSaved,
+    required this.validator,
     this.expand = false,
     super.key
   });
@@ -39,6 +43,10 @@ class CustomTextField extends StatelessWidget {
         filled: true,
         fillColor: Colors.grey[300],
       ),
+      /// When we save
+      onSaved: onSaved,
+      /// when we validate the logic
+      validator: validator,
       maxLines: expand ? null : 1,
       minLines: expand ? null : 1,
       expands: expand,

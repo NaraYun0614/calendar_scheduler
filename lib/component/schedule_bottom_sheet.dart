@@ -19,55 +19,116 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 16.0),
-          child: Column(
-            children: [
-              _Time(),
-              SizedBox(height: 8.0),
-              _Content(),
-              SizedBox(height: 8.0),
-              _Categories(
-                selectedColor: selectedColor,
-                onTap: (String color){
-                  setState(() {
-                    selectedColor = color;
-                  });
-                },
-              ),
-              SizedBox(height: 8.0),
-              _SaveButton(),
-            ],
+          child: Form(
+            child: Column(
+              children: [
+                _Time(
+                  onEndSaved: onEndTimeSaved,
+                  onEndValidate: onEndTimeValidate,
+                  onStartSaved: onStartTimeSaved,
+                  onStartValidate: onStartTimeValidate,
+                ),
+                SizedBox(height: 8.0),
+                _Content(
+                  onSaved: onContentSaved,
+                  onValidate: onContentValidate,
+                ),
+                SizedBox(height: 8.0),
+                _Categories(
+                  selectedColor: selectedColor,
+                  onTap: (String color){
+                    setState(() {
+                      selectedColor = color;
+                    });
+                  },
+                ),
+                SizedBox(height: 8.0),
+                _SaveButton(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+
+  void onStartTimeSaved(String? val) {
+
+  }
+
+  String? onStartTimeValidate(String? val) {
+
+  }
+
+  void onEndTimeSaved(String? val) {
+
+  }
+
+  String? onEndTimeValidate(String? val) {
+
+  }
+
+  void onContentSaved(String? val) {
+
+  }
+
+  String? onContentValidate(String? val) {
+
+  }
 }
 
 class _Time extends StatelessWidget {
-  const _Time({super.key});
+  final FormFieldSetter<String> onStartSaved;
+  final FormFieldSetter<String> onEndSaved;
+  final FormFieldValidator<String> onStartValidate;
+  final FormFieldValidator<String> onEndValidate;
+
+  const _Time({
+    required this.onStartSaved,
+    required this.onEndSaved,
+    required this.onStartValidate,
+    required this.onEndValidate,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: CustomTextField(
-            label: 'Start Time',
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: CustomTextField(
+                label: 'Start Time',
+                onSaved: onStartSaved,
+                validator: onStartValidate,
+              ),
+            ),
+            SizedBox(width: 16.0),
+            Expanded(
+              child: CustomTextField(
+                label: 'End Time',
+                onSaved: onEndSaved,
+                validator: onEndValidate,
+              ),
+            ),
+          ],
         ),
-        SizedBox(width: 16.0),
-        Expanded(
-          child: CustomTextField(
-            label: 'End Time',
-          ),
-        ),
+
       ],
     );
   }
 }
 
 class _Content extends StatelessWidget {
-  const _Content({super.key});
+  final FormFieldSetter<String> onSaved;
+  final FormFieldValidator<String> onValidate;
+
+  const _Content({
+    required this.onSaved,
+    required this.onValidate,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +136,8 @@ class _Content extends StatelessWidget {
       child: CustomTextField(
         label: 'Content',
         expand: true,
+        onSaved: onSaved,
+        validator: onValidate,
       ),
     );
   }
