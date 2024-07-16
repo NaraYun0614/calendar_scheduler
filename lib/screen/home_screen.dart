@@ -51,6 +51,12 @@ class HomeScreen extends StatefulWidget {
                             ),
                           ],
                         ),
+                        Expanded(
+                          child: CustomTextField(
+                            label: '내용',
+                            expand: true,
+                          ),
+                        ),
                       ],
                     ),
                   ),
