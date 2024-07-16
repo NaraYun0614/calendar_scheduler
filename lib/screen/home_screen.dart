@@ -1,4 +1,5 @@
 import 'package:calendar_scheduler/component/calendar.dart';
+import 'package:calendar_scheduler/component/custom_text_field.dart';
 import 'package:calendar_scheduler/component/schedule_card.dart';
 import 'package:calendar_scheduler/component/today_banner.dart';
 import 'package:calendar_scheduler/const/color.dart';
@@ -31,10 +32,27 @@ class HomeScreen extends StatefulWidget {
                 return Container(
                   color: Colors.white,
                   height: 600,
-                  child: Column(
-                    children: [
-
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 16.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CustomTextField(
+                                label: 'Start Time',
+                              ),
+                            ),
+                            SizedBox(width: 16.0),
+                            Expanded(
+                              child: CustomTextField(
+                                label: 'End Time',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
