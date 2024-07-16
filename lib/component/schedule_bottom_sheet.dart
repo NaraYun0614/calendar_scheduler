@@ -71,7 +71,20 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
   }
 
   String? onStartTimeValidate(String? val) {
+    if(val == null) {
+      return 'Insert the value!';
+    }
 
+    if(int.tryParse(val) == null) {
+      return 'Insert number!';
+    }
+
+    final time = int.parse(val);
+
+    if(time > 24 || time < 0) {
+      return 'Must be b/w 0 to 24!';
+    }
+    return null;
   }
 
   void onEndTimeSaved(String? val) {
@@ -83,7 +96,21 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
   }
 
   String? onEndTimeValidate(String? val) {
+    if(val == null) {
+      return 'Insert the value!';
+    }
 
+    if(int.tryParse(val) == null) {
+      return 'Insert number!';
+    }
+
+    final time = int.parse(val);
+
+    if(time > 24 || time < 0) {
+      return 'Must be b/w 0 to 24!';
+    }
+
+    return null;
   }
 
   void onContentSaved(String? val) {
@@ -95,17 +122,29 @@ class _ScheduleBottomSheetState extends State<ScheduleBottomSheet> {
   }
 
   String? onContentValidate(String? val) {
+    if(val == null) {
+      return 'Type Content!';
+    }
 
+    if(val.length < 5) {
+      return 'too short!';
+    }
+
+    return null;
   }
 
   void onSavePressed() {
-    formKey.currentState!.save();
+    final isValid = formKey.currentState!.validate();
 
-    print('-------------------------');
-    print(startTime);
-    print(endTime);
-    print(content);
-    print(category);
+    if(isValid) {
+      formKey.currentState!.save();
+
+      print('-------------------------');
+      print(startTime);
+      print(endTime);
+      print(content);
+      print(category);
+    }
   }
 }
 
