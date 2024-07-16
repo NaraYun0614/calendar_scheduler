@@ -7,6 +7,8 @@ import 'package:calendar_scheduler/const/color.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../model/schedule.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -20,6 +22,8 @@ class HomeScreen extends StatefulWidget {
       DateTime.now().month,
       DateTime.now().day,
     );
+
+    Map<DateTime, List<Schedule>> schedule = {};
 
     @override
     Widget build(BuildContext context) {

@@ -22,5 +22,5 @@ class Schedule{
     required this.date,
     required this.color,
     required this.createdAt,
-})
+});
 }
