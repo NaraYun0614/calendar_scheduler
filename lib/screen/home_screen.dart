@@ -23,6 +23,29 @@ class HomeScreen extends StatefulWidget {
     Widget build(BuildContext context) {
 
       return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+            showModalBottomSheet(
+              context: context,
+              builder: (_) {
+                return Container(
+                  color: Colors.white,
+                  height: 600,
+                  child: Column(
+                    children: [
+
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+          backgroundColor: primaryColor,
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+        ),
         body: SafeArea(
           child: Column(
             children: [
