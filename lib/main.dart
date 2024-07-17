@@ -3,6 +3,7 @@ import 'package:calendar_scheduler/database/drift.dart';
 import 'package:calendar_scheduler/screen/home_screen.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:intl/date_symbol_data_local.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,20 +12,7 @@ void main() async {
 
   final database = AppDatabase();
 
-  await database.createSchedule(
-    ScheduleTableCompanion(
-      startTime: Value(12),
-      endTime: Value(12),
-      content: Value('Flutter Programming'),
-      date: Value(DateTime.utc(2024,7,21)),
-      color: Value(categoryColors.first),
-    ),
-  );
-
-  final resp = await database.getSchedules();
-
-  print('------------------------');
-  print(resp);
+  GetIt.I.registerSingleton<AppDatabase>(database);
 
   runApp(
     MaterialApp(
