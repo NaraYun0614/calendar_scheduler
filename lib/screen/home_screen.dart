@@ -65,9 +65,6 @@ class HomeScreen extends StatefulWidget {
                 );
               },
             );
-
-            setState(() {});
-
           },
           backgroundColor: primaryColor,
           child: Icon(
@@ -90,8 +87,8 @@ class HomeScreen extends StatefulWidget {
               Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
-                    child: FutureBuilder<List<ScheduleTableData>>(
-                      future: GetIt.I<AppDatabase>().getSchedules(
+                    child: StreamBuilder<List<ScheduleTableData>>(
+                      stream: GetIt.I<AppDatabase>().streamSchedules(
                         selectedDay,
                       ),
                       builder: (context, snapshot) {
@@ -103,8 +100,7 @@ class HomeScreen extends StatefulWidget {
                           );
                         }
 
-                        if (!snapshot.hasData &&
-                            snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.data == null) {
                           return Center(
                             child: CircularProgressIndicator(),
                           );
@@ -125,14 +121,17 @@ class HomeScreen extends StatefulWidget {
                             return Dismissible(
                               key: ObjectKey(schedule.id),
                               direction: DismissDirection.endToStart,
-                              confirmDismiss: (DismissDirection direction) async {
-                                await GetIt.I<AppDatabase>().removeSchedule(
+                              // confirmDismiss: (DismissDirection direction) async {
+                              //   await GetIt.I<AppDatabase>().removeSchedule(
+                              //     schedule.id,
+                              //   );
+                              //
+                              //   return true;
+                              // },
+                              onDismissed: (DismissDirection direction) {
+                                GetIt.I<AppDatabase>().removeSchedule(
                                   schedule.id,
                                 );
-
-                                setState(() {});
-
-                                return true;
                               },
                               child: ScheduleCard(
                                   startTime: schedule.startTime,

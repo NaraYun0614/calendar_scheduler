@@ -20,6 +20,10 @@ class AppDatabase extends _$AppDatabase{
   ) =>
     (select(scheduleTable)..where((table) => table.date.equals(date))).get();
 
+  Stream<List<ScheduleTableData>> streamSchedules(
+      DateTime date,
+      ) => (select(scheduleTable)..where((table) => table.date.equals(date))).watch();
+
   Future<int> createSchedule(ScheduleTableCompanion data) =>
       into(scheduleTable).insert(data);
 
