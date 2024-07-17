@@ -122,16 +122,29 @@ class HomeScreen extends StatefulWidget {
 
                             final schedule = schedules[index];
                         
-                            return ScheduleCard(
-                                startTime: schedule.startTime,
-                                endTime: schedule.endTime,
-                                content: schedule.content,
-                                color: Color(
-                                  int.parse(
-                                    'FF${schedule.color}',
-                                    radix: 16,
+                            return Dismissible(
+                              key: ObjectKey(schedule.id),
+                              direction: DismissDirection.endToStart,
+                              confirmDismiss: (DismissDirection direction) async {
+                                await GetIt.I<AppDatabase>().removeSchedule(
+                                  schedule.id,
+                                );
+
+                                setState(() {});
+
+                                return true;
+                              },
+                              child: ScheduleCard(
+                                  startTime: schedule.startTime,
+                                  endTime: schedule.endTime,
+                                  content: schedule.content,
+                                  color: Color(
+                                    int.parse(
+                                      'FF${schedule.color}',
+                                      radix: 16,
+                                    ),
                                   ),
-                                ),
+                              ),
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {
